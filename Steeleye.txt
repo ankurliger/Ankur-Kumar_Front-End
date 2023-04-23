@@ -1,0 +1,91 @@
+ques.1  Explain what the simple List component does.
+
+Ans. The simple List component is a React component that renders a list of 
+items with the ability to select an item. It consists of two sub-components,
+ SingleListItem and List. The SingleListItem is a memoized functional 
+component that renders a single item in the list. The List component is also
+ a memoized functional component that maps over an array of items and renders 
+a list of SingleListItem components.
+
+ques.2 What problems / warnings are there with code?
+
+There are a few problems / warnings with the code:
+
+Ans. In the SingleListItem component, the onClickHandler function should be wrapped inside an arrow function to prevent it from being called immediately.
+The propTypes for the items prop in the WrappedListComponent should be defined as an array of objects using the shapeOf validator.
+The isSelected prop in the SingleListItem component is not being properly set to a boolean value. It should be checked against the selectedIndex state using triple equals (===).
+Here's a modified and optimized version of the code:
+
+
+ques.3 Please fix, optimize, and/or modify the component as much as you think is necessary.
+
+import React, { useState, useEffect, memo } from 'react';
+import PropTypes from 'prop-types';
+
+// Single List Item
+const SingleListItem = memo(({ index, isSelected, onClickHandler, text }) => {
+const handleClick = () => onClickHandler(index);
+
+return (
+<li
+style={{ backgroundColor: isSelected === index ? 'green' : 'red' }}
+onClick={handleClick}
+>
+{text}
+</li>
+);
+});
+
+SingleListItem.propTypes = {
+index: PropTypes.number.isRequired,
+isSelected: PropTypes.number.isRequired,
+onClickHandler: PropTypes.func.isRequired,
+text: PropTypes.string.isRequired,
+};
+
+// List Component
+const List = memo(({ items }) => {
+const [selectedIndex, setSelectedIndex] = useState(null);
+
+useEffect(() => {
+setSelectedIndex(null);
+}, [items]);
+
+const handleClick = index => setSelectedIndex(index);
+
+return (
+<ul style={{ textAlign: 'left' }}>
+{items &&
+items.map((item, index) => (
+<SingleListItem
+         key={index}
+         onClickHandler={handleClick}
+         text={item.text}
+         index={index}
+         isSelected={selectedIndex}
+       />
+))}
+</ul>
+);
+});
+
+List.propTypes = {
+items: PropTypes.arrayOf(
+PropTypes.shape({
+text: PropTypes.string.isRequired,
+})
+),
+};
+
+List.defaultProps = {
+items: null,
+};
+
+export default List;
+
+The modified code includes the following changes:
+
+The onClickHandler function in the SingleListItem component is now wrapped inside an arrow function.
+The isSelected prop in the SingleListItem component is now checked against the selectedIndex state using triple equals (===).
+The propTypes for the items prop in the List component now uses the arrayOf validator and the shape validator to ensure that it is an array of objects with a text property.
+A key prop is added to the SingleListItem component to improve performance when rendering lists of items.
