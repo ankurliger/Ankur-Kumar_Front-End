@@ -6,4 +6,5 @@ The Simple List component is a tool used in creating a list of items in a React 
 To use the Simple List component, you'll need to pass it an array of data that you want to display in the list. Each item in the array will be rendered as a separate list element (<li>) within the unordered list (<ul>). You can also add a key prop to each list item to help React keep track of the order of the items.
   
   
-  https://i.ibb.co/wrPnFm4/68747470733a2f2f692e6962622e636f2f39564e3878776b2f4170702d6a732e706e67.png
+  ![List Component]([https://i.ibb.co/V2YvWsd/acc-1.jpg](https://i.ibb.co/wrPnFm4/68747470733a2f2f692e6962622e636f2f39564e3878776b2f4170702d6a732e706e67.png))
+  
